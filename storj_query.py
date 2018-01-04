@@ -61,7 +61,7 @@ def compare_time(time_str):
 
 
 def proc_data(data):
-    """ Process and convert the data and return a dict of the stored data """
+    """ Process/convert the data and return a dict of the stored data """
     data_dict = {}
     for item, _ in enumerate(data):
         if 'lastSeen' in data[item]:
@@ -94,7 +94,7 @@ def proc_data(data):
 
 
 def print_format(data):
-    """ Format the and print the data to our liking """
+    """ Format and print the data to our liking """
     print("{:<40s}".format(data['nodeid']), end="")
     if compare_time(data['time_stamp']) == 3:
         Color.green(" {:<19s}".format(data['time_stamp']), end="")
