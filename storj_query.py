@@ -101,7 +101,7 @@ def print_format(data):
     elif compare_time(data['time_stamp']) == 6:
         Color.yellow(" {:<19s}".format(data['time_stamp']), end="")
     else:
-        Color.red("{:<19s} ".format(data['time_stamp']), end="")
+        Color.red(" {:<19s} ".format(data['time_stamp']), end="")
     print(" {:<4s} ".format(data['rep']), end="")
     print(" {:<19s} ".format(data['response']), end="")
     try:
