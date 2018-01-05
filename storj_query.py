@@ -34,13 +34,6 @@ def convert_time(time_str):
     return converted
 
 
-def compare_date(time_str):
-    """ Compare date within 24 hours """
-    t_format = "%Y-%m-%d %H:%M:%S"
-    return datetime.datetime.now()-datetime.timedelta(hours=24) <= \
-        datetime.datetime.strptime(time_str, t_format)
-
-
 def compare_time(time_str):
     """ Compare timestamp at various hours """
     t_format = "%Y-%m-%d %H:%M:%S"
@@ -105,8 +98,12 @@ def print_format(data):
     print(" {:<4s} ".format(data['rep']), end="")
     print(" {:<19s} ".format(data['response']), end="")
     try:
-        if compare_date(data['timeout']):
+        if compare_time(data['timeout']) == 3:
             Color.red(" {:<19s}".format(data['timeout']))
+        elif compare_time(data['timeout']) == 6:
+            Color.yellow(" {:<19s}".format(data['timeout']))
+        elif compare_time(data['timeout']) > 6:
+            Color.grey(" {:<19s}".format(data['timeout']))
         else:
             Color.white(" {:<19s}".format(data['timeout']))
     except KeyError:
