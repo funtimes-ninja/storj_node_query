@@ -1,0 +1,77 @@
+{
+  // Set the STORJ/ERC20 wallet address for receiving contract payments
+  "paymentAddress": "YOUR WALLET ADDRESS GOES HERE",
+  // Subscribes to the given contract topics
+  // See https://storj.github.io/core/tutorial-contract-topics.html
+  "opcodeSubscriptions": [
+    "0f01020202",
+    "0f02020202",
+    "0f03020202"
+  ],
+  // An array of bridges to connect and accept contracts,
+  // send exchange reports and discover network seeds.
+  "bridges":[
+    {
+      "url": "https://api.storj.io",
+      "extendedKey": "THIS GETS AUTO CREATED"
+    }
+  ],
+  // Known preferred seeds in form of a storj URI
+  // Example: "storj://[ip.or.hostname]:[port]/[nodeid]"
+  "seedList": [],
+  // Interface to bind RPC server, use 0.0.0.0 for all interfaces or if you
+  // have a public address, use that, else leave 127.0.0.1 and Storj Share
+  // will try to determine your address
+  "rpcAddress": "YOUR WAN IP OR DDNS NAME",
+  // Port to bind for RPC server, make sure this is forwarded if behind a
+  // NAT or firewall - otherwise Storj Share will try to punch out
+  // Ensure each rpcPort for each node is different!
+  "rpcPort": 4001,
+  // doNotTraverseNat: true requires you to have an external ip address.
+  // You can use a proxy to gain an external IP address.
+  // doNotTraverseNat: false Enables NAT traversal strategies
+  // first UPnP, then reverse HTTP tunnel
+  // if that fails. Disable if you are public or using dynamic DNS
+  // WE WANT TO FORCE THIS TO TCP PORT FORWARDING! SET TO TRUE!
+  "doNotTraverseNat": true,
+  // Maximum number of tunnels to provide to the network
+  // Tunnels help nodes with restrictive network configurations participate
+  "maxTunnels": 3,
+  // Maximum number of concurrent connections to allow
+  "maxConnections": 150,
+  // If providing tunnels, the starting and ending port range to open for
+  // them
+  "tunnelGatewayRange": {
+    "min": 4001,
+    "max": 4003
+  },
+  // Number of times to retry joining the network and the wait time between
+  "joinRetry": {
+    "times": 3,
+    "interval": 5000
+  },
+  // Temporarily stop sending OFFER messages if more than this number of shard
+  // transfers are active
+  "offerBackoffLimit": 4,
+  // ECDSA private key for your network identity, your Node ID is derived from
+  // this and it is used to sign and verify messages
+  "networkPrivateKey": "THIS WILL BE AUTO CREATED",
+  // Determines how much detail is shown in the log:
+  // 4 - DEBUG | 3 - INFO | 2 - WARN | 1 - ERROR | 0 - SILENT
+  "loggerVerbosity": 3,
+  // Path to write the log file to disk, leave empty to default to:
+  // $HOME/.config/storjshare/logs/[nodeid]_date.log
+  "loggerOutputFile": "C:\\Users\\user\\.config\\storjshare\\logs\\",
+  // Directory path to store contracts and shards
+  "storagePath": "D:\\Node_01",
+  // Amount of space to lease to the network, as human readable string
+  // Valid units are B, KB, MB, GB, TB
+  // DO NOT FORGET THE COMMA AFTER THE NEXT LINE
+  "storageAllocation": "1TB",
+  // Max size of shards that will be accepted and stored
+  // Use this and make this lower if you don't have a strong internet connection
+  // ENSURE YOU SET A MAX SHARD SIZE!!!
+  // https://github.com/Storj/core/issues/752
+  "maxShardSize": "4096MB"
+}
+
