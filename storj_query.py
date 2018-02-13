@@ -16,9 +16,15 @@ SITE = 'https://api.storj.io/contacts/'
 def get_nodes(node_file):
     """ Read nodes from a text file into a list """
     with open(node_file) as file_node:
-        nodes = file_node.readlines()
-    final = [node.strip() for node in nodes[1:]]
-    return final
+        lines = file_node.readlines()
+
+    nodes = []
+
+    for line in [line.strip() for line in lines]:
+        if not line.startswith("#"):
+            nodes.append(line)
+
+    return nodes
 
 
 def convert_time(time_str):
@@ -37,16 +43,16 @@ def convert_time(time_str):
 def compare_time(time_str):
     """ Compare timestamp at various hours """
     t_format = "%Y-%m-%d %H:%M:%S"
-    if datetime.datetime.now()-datetime.timedelta(hours=3) <= \
+    if datetime.datetime.now() - datetime.timedelta(hours=3) <= \
        datetime.datetime.strptime(time_str, t_format):
         return 3
-    elif datetime.datetime.now()-datetime.timedelta(hours=6) <= \
+    elif datetime.datetime.now() - datetime.timedelta(hours=6) <= \
             datetime.datetime.strptime(time_str, t_format):
         return 6
-    elif datetime.datetime.now()-datetime.timedelta(hours=12) <= \
+    elif datetime.datetime.now() - datetime.timedelta(hours=12) <= \
             datetime.datetime.strptime(time_str, t_format):
         return 12
-    elif datetime.datetime.now()-datetime.timedelta(hours=24) <= \
+    elif datetime.datetime.now() - datetime.timedelta(hours=24) <= \
             datetime.datetime.strptime(time_str, t_format):
         return 24
     # Else catch all
@@ -55,7 +61,7 @@ def compare_time(time_str):
 
 def proc_data(data):
     """ Process/convert the data and return a dict of the stored data """
-    data_dict = {}
+    data_dict = {'rep': ''}
     for item, _ in enumerate(data):
         if 'lastSeen' in data[item]:
             time_stamp = data[item].split(':', 1)[1].split('.')[0]
@@ -117,7 +123,7 @@ def main():
                   'TIMEOUT'))
     nodes = get_nodes('./nodes.txt')
     for count, _ in enumerate(nodes):
-        process = subprocess.check_output(['curl', '-s', SITE+nodes[count]],
+        process = subprocess.check_output(['curl', '-s', SITE + nodes[count]],
                                           universal_newlines=True).strip()
         data = process.replace('{', '').replace('}', '').replace('"', '')\
                       .split(',')
